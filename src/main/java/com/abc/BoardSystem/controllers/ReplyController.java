@@ -29,6 +29,7 @@ public class ReplyController {
 	
 	@PostMapping
 	public Response<String> postReply(@RequestBody Reply reply){
+		System.out.println(reply);
 		Response<List<Integer>> res =replyService.postReply(reply);
 		if(!res.isSuccess()) {
 			return new Response<>(false);
@@ -38,13 +39,13 @@ public class ReplyController {
 		    long timestamp = ((ts.getTime()) / 1000) * 1000;
 		
 		if(list.size()==2) {
-			
+		
 			    /////////////need to get username via JMS use reply sender
-			notificationService.sendNotification(new Notification(list.get(0), "someone replys to your comment", new Timestamp(timestamp)));
-			notificationService.sendNotification(new Notification(list.get(1), "someone replys to your post", new Timestamp(timestamp)));
+			notificationService.sendNotification(new Notification(list.get(0), reply.getSenderId()+" replys to your comment", new Timestamp(timestamp)));
+			notificationService.sendNotification(new Notification(list.get(1), reply.getSenderId()+" replys to your post", new Timestamp(timestamp)));
 		}
 		else if(list.size()==1) {
-			notificationService.sendNotification(new Notification(list.get(0), "someone replys to your comment", new Timestamp(timestamp)));
+			notificationService.sendNotification(new Notification(list.get(0), reply.getSenderId()+" replys to your comment", new Timestamp(timestamp)));
 		}
 		return new Response<>(true);
 	}

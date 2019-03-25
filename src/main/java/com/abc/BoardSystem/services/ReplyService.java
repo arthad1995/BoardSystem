@@ -36,8 +36,9 @@ public class ReplyService {
 		try {
 			
 			replyList.add(reply.getReplyToUserId());
-
-			if(reply.getReplyToUserId()!=bd.findById(reply.getBoardId()).get().getPosterId())
+			//reply to != board poster
+			int posterid =bd.findById(reply.getBoardId()).get().getPosterId();
+			if(reply.getReplyToUserId()!=posterid&&reply.getSenderId()!=posterid)
 				replyList.add(bd.findById(reply.getBoardId()).get().getPosterId());
 		}
 		catch(Exception e) {
@@ -58,7 +59,9 @@ public class ReplyService {
 			if(reply.getContent()!=null) {
 				b.setContent(reply.getContent());
 			}
-			
+			 Timestamp ts = new Timestamp(System.currentTimeMillis());
+			    long timestamp = ((ts.getTime()) / 1000) * 1000;
+			    b.setTime(new Timestamp(timestamp));
 			rd.save(b);
 		}
 		catch(Exception e) {

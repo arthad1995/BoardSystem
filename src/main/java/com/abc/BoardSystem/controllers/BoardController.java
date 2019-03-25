@@ -25,6 +25,7 @@ public class BoardController {
 	
 	@PostMapping
 	public Response<String> addBoard(@RequestBody Board board){
+		
 		return boardService.addBoard(board);
 	}
 	
@@ -48,9 +49,5 @@ public class BoardController {
 	public Response<Board> getBoard(@PathVariable int id){
 		return boardService.getBoard(id);
 	}
-	
-	
-	
-	
-	
+
 }

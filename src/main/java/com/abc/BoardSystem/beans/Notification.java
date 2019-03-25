@@ -2,6 +2,7 @@ package com.abc.BoardSystem.beans;
 
 
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -17,7 +18,8 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "ABC_NOTIFICATION")
-public class Notification {
+public class Notification implements Serializable{
+	private static final long serialVersionUID = 283408907869273L;
 	@Id
 	@SequenceGenerator(name="abc_notification_seq_gen", sequenceName="ABC_NOTIFICATION_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.AUTO, generator="abc_notification_seq_gen")
